@@ -1,7 +1,29 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
+import 'main.dart';
+
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  CameraController? _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = CameraController(cameras[0], ResolutionPreset.medium);
+    _controller?.initialize().then((_) {
+      if (!mounted) {
+        return;
+      }
+      setState(() {});
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
