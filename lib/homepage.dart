@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                     alignment: Alignment.bottomCenter,
                     child: ElevatedButton.icon(
                       icon: const Icon(Icons.camera),
-                      label: const Text("Click"),
+                      label: const Text("Click here"),
                       onPressed: () async {
                         // If the returned path is not null, navigate
                         // to the DetailScreen
