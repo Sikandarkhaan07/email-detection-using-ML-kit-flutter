@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('email  Vision'),
+        title: const Text('email detection Vision'),
       ),
       body: _controller.value.isInitialized
           ? Stack(
