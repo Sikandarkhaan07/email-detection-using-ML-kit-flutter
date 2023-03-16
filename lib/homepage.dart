@@ -1,10 +1,10 @@
-import 'dart:async';
+// ignore_for_file: use_build_context_synchronously
 
-import 'package:camera/camera.dart';
+import 'dart:developer';
+import 'dart:io';
 import 'package:flutter/material.dart';
-
-import 'details.dart';
-import 'main.dart';
+import 'package:image_picker/image_picker.dart';
+import './test.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,110 +14,94 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // Inside _CameraScreenState class
-
-  late final CameraController _controller;
-
-  void _initializeCamera() async {
-    final CameraController cameraController = CameraController(
-      cameras[0],
-      ResolutionPreset.high,
-    );
-    _controller = cameraController;
-
-    _controller.initialize().then((_) {
-      if (!mounted) {
-        return;
-      }
-      setState(() {});
-    });
-  }
-
-  @override
-  void initState() {
-    _initializeCamera();
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-// Takes picture with the selected device camera, and
-// returns the image path
-  Future<String?> _takePicture() async {
-    if (!_controller.value.isInitialized) {
-      return null;
-    }
-
-    String? imagePath;
-
-    if (_controller.value.isTakingPicture) {
-      return null;
-    }
-
-    try {
-      // Turning off the camera flash
-      _controller.setFlashMode(FlashMode.off);
-      // Returns the image in cross-platform file abstraction
-      final XFile file = await _controller.takePicture();
-      // Retrieving the path
-      imagePath = file.path;
-    } on CameraException {
-      return null;
-    }
-
-    return imagePath;
-  }
+  String? imagePath;
+  final ImagePicker picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    log('building main.....');
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Upload Email'),
+        title: const Text('Upload Picture'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                setState(() {});
+              },
+              icon: const Icon(Icons.check_box))
+        ],
       ),
-      body: _controller.value.isInitialized
-          ? Stack(
-              children: <Widget>[
-                CameraPreview(_controller),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Container(
-                    alignment: Alignment.bottomCenter,
-                    child: ElevatedButton.icon(
-                      icon: const Icon(Icons.camera),
-                      label: const Text("Click to open"),
-                      onPressed: () async {
-                        // If the returned path is not null, navigate
-                        // to the DetailScreen
-                        await _takePicture().then((String? path) {
-                          if (path != null) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DetailScreen(
-                                  imagePath: path,
-                                ),
-                              ),
-                            );
-                          } else {
-                            //print('Image path not found!');
-                          }
-                        });
-                      },
-                    ),
-                  ),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          imagePath == null
+              ? SizedBox(
+                  width: size.width * 0.8,
+                  height: size.height * 0.4,
+                  child: Image.asset('assets/images/man.png'),
                 )
+              : SizedBox(
+                  width: size.width * 0.8,
+                  height: size.height * 0.4,
+                  child: Image.file(File(imagePath!)),
+                ),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.browse_gallery),
+                    label: const Text("Gallery"),
+                    onPressed: () async {
+                      // Pick an image
+                      final XFile? image =
+                          await picker.pickImage(source: ImageSource.gallery);
+                      if (image != null) {
+                        log('Image path: ${image.path}');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => DetailScreen(image.path),
+                          ),
+                        );
+                      } else {
+                        log('Image path: null');
+                      }
+                    },
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  child: ElevatedButton.icon(
+                    icon: const Icon(Icons.camera_alt_rounded),
+                    label: const Text("Camera"),
+                    onPressed: () async {
+                      // Capture a photo
+                      final XFile? photo =
+                          await picker.pickImage(source: ImageSource.camera);
+                      if (photo != null) {
+                        log('Image path: ${photo.path}');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => DetailScreen(photo.path),
+                          ),
+                        );
+                      } else {
+                        log('Image path: null');
+                      }
+                    },
+                  ),
+                ),
               ],
-            )
-          : Container(
-              color: Colors.black,
-              child: const Center(
-                child: CircularProgressIndicator(),
-              ),
             ),
+          ),
+        ],
+      ),
     );
   }
 }

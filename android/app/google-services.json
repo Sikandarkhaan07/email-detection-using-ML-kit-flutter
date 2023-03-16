@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "945355047774",
-    "project_id": "email-8fb24",
-    "storage_bucket": "email-8fb24.appspot.com"
+    "project_number": "416858221247",
+    "project_id": "email-detection-e490a",
+    "storage_bucket": "email-detection-e490a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:945355047774:android:f8a55888da5c15d3c3c5cf",
+        "mobilesdk_app_id": "1:416858221247:android:a721ef399fd9f10cb0f40a",
         "android_client_info": {
           "package_name": "com.example.email_detection"
         }
       },
       "oauth_client": [
         {
-          "client_id": "945355047774-8jd4qe1mfnh6barlbokbrm459fc37930.apps.googleusercontent.com",
+          "client_id": "416858221247-3e1991nhip03ms2b5nucnp4bmegadp99.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBlo9HJK-cVw2QY0L7JltxRHgQWBCB0uYA"
+          "current_key": "AIzaSyBofnEhTo-M0sMjRu8bhxO3UyNKFQ1QAvI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "945355047774-8jd4qe1mfnh6barlbokbrm459fc37930.apps.googleusercontent.com",
+              "client_id": "416858221247-3e1991nhip03ms2b5nucnp4bmegadp99.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -46,30 +49,21 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDMou4FBBpPWAOUGiyVRuG6e1cmZ9aJ8lc',
-    appId: '1:945355047774:web:eb5673038a96897dc3c5cf',
-    messagingSenderId: '945355047774',
-    projectId: 'email-8fb24',
-    authDomain: 'email-8fb24.firebaseapp.com',
-    storageBucket: 'email-8fb24.appspot.com',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBlo9HJK-cVw2QY0L7JltxRHgQWBCB0uYA',
-    appId: '1:945355047774:android:f8a55888da5c15d3c3c5cf',
-    messagingSenderId: '945355047774',
-    projectId: 'email-8fb24',
-    storageBucket: 'email-8fb24.appspot.com',
+    apiKey: 'AIzaSyBofnEhTo-M0sMjRu8bhxO3UyNKFQ1QAvI',
+    appId: '1:416858221247:android:a721ef399fd9f10cb0f40a',
+    messagingSenderId: '416858221247',
+    projectId: 'email-detection-e490a',
+    storageBucket: 'email-detection-e490a.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA4of1HC4Bnau0D8DjEYhCRjw4rAp-DT8U',
-    appId: '1:945355047774:ios:4f07c0454aa97869c3c5cf',
-    messagingSenderId: '945355047774',
-    projectId: 'email-8fb24',
-    storageBucket: 'email-8fb24.appspot.com',
-    iosClientId: '945355047774-8nh6monk1ug6a5kp85bshhg29l7ghkfj.apps.googleusercontent.com',
+    apiKey: 'AIzaSyDwg95FnQ7utKcyq7p_GsYm4AoXlc-ZL0Y',
+    appId: '1:416858221247:ios:dd60de4bfc09b092b0f40a',
+    messagingSenderId: '416858221247',
+    projectId: 'email-detection-e490a',
+    storageBucket: 'email-detection-e490a.appspot.com',
+    iosClientId: '416858221247-8mmqmcq3gff7l425aq0bpvh16kan6ti1.apps.googleusercontent.com',
     iosBundleId: 'com.example.emailDetection',
   );
 }
