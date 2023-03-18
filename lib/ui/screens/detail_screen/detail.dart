@@ -1,14 +1,16 @@
-// ignore_for_file: no_logic_in_create_state, unused_field, prefer_final_fields
+// ignore_for_file: no_logic_in_create_state, unused_field, prefer_final_fields, library_private_types_in_public_api
 
+import 'dart:convert';
 import 'dart:developer';
 
-import 'package:email_detection/painter.dart';
+import 'package:email_detection/core/widgets/painter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:google_ml_kit/google_ml_kit.dart';
 import 'dart:io';
 import 'dart:async';
 
-import 'api/api.dart';
+import '../../../core/api/api.dart';
 
 class DetailScreen extends StatefulWidget {
   final String imagePath;
@@ -87,7 +89,7 @@ class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
     log('test........');
-    APIs.getResponse();
+    // APIs.getResponse();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Image Details"),
@@ -133,12 +135,56 @@ class _DetailScreenState extends State<DetailScreen> {
                             ),
                           ),
                           SizedBox(
-                            height: 70,
+                            height: 150,
                             child: ListView.builder(
+                              shrinkWrap: true,
                               itemCount: identifiedEmails.length,
                               itemBuilder: (context, index) {
                                 if (identifiedEmails.isNotEmpty) {
-                                  return Text(identifiedEmails[index]);
+                                  return FutureBuilder(
+                                      future: APIs.getResponse(
+                                          identifiedEmails[index]),
+                                      builder: (BuildContext context,
+                                          AsyncSnapshot snapshot) {
+                                        if (snapshot.connectionState ==
+                                            ConnectionState.waiting) {
+                                          return Card(
+                                            elevation: 2,
+                                            color: Colors.blueAccent,
+                                            child: ListTile(
+                                              title:
+                                                  Text(identifiedEmails[index]),
+                                              trailing: const Icon(
+                                                  CupertinoIcons
+                                                      .question_circle_fill),
+                                            ),
+                                          );
+                                        } else if (snapshot.connectionState ==
+                                            ConnectionState.done) {
+                                          var data = jsonDecode(snapshot.data)
+                                              as Map<String, dynamic>;
+
+                                          return Card(
+                                            elevation: 2,
+                                            color: Colors.blueAccent,
+                                            child: ListTile(
+                                              title:
+                                                  Text(identifiedEmails[index]),
+                                              trailing: data['smtp_check'] ==
+                                                      true
+                                                  ? const Icon(CupertinoIcons
+                                                      .check_mark_circled)
+                                                  : const Icon(
+                                                      Icons.close_rounded),
+                                            ),
+                                          );
+                                          // }
+                                        } else {
+                                          return const Center(
+                                            child: CircularProgressIndicator(),
+                                          );
+                                        }
+                                      });
                                 } else {
                                   return const Center(
                                       child: Text('No email has been found'));

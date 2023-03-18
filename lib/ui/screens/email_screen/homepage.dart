@@ -4,16 +4,16 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import './test.dart';
+import '../detail_screen/detail.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class EmailImageScreen extends StatefulWidget {
+  const EmailImageScreen({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<EmailImageScreen> createState() => _EmailImageScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _EmailImageScreenState extends State<EmailImageScreen> {
   String? imagePath;
   final ImagePicker picker = ImagePicker();
 
