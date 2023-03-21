@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'core/routes/routes.dart';
+import 'core/routes/routes_name.dart';
 import 'firebase_options.dart';
-import 'ui/screens/email_screen/homepage.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,11 +19,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Gmail detection',
+      title: 'Official Docs Finder',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const EmailImageScreen(),
+      initialRoute: RoutesName.optionsScreen,
+      onGenerateRoute: Routes.generateRoutes,
     );
   }
 }

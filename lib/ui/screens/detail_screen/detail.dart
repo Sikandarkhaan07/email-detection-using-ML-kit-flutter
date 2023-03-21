@@ -1,20 +1,19 @@
 // ignore_for_file: no_logic_in_create_state, unused_field, prefer_final_fields, library_private_types_in_public_api
 
 import 'dart:convert';
-import 'dart:developer';
-
-import 'package:email_detection/core/widgets/painter.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
 import 'dart:io';
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:google_ml_kit/google_ml_kit.dart';
+
+import 'package:email_detection/core/widgets/painter.dart';
 import '../../../core/api/api.dart';
 
 class DetailScreen extends StatefulWidget {
   final String imagePath;
-  const DetailScreen(this.imagePath, {super.key});
+  const DetailScreen({required this.imagePath, super.key});
 
   @override
   _DetailScreenState createState() => _DetailScreenState();
@@ -88,8 +87,6 @@ class _DetailScreenState extends State<DetailScreen> {
 
   @override
   Widget build(BuildContext context) {
-    log('test........');
-    // APIs.getResponse();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Image Details"),
